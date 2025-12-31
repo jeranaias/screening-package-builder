@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Checklist-driven package builder for USMC special duty assignments and board packages. Track required documents, generate cover sheets, ensure completeness.">
+  <title>Screening Package Builder - USMC Tools</title>
+
+  <!-- PWA -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#8B0000">
+  <link rel="apple-touch-icon" href="assets/icon-192.svg">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/styles.css">
+
+  <!-- jsPDF for PDF export -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body>
+  <!-- Skip Link - Accessibility -->
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <!-- ============================================
+       VIEW: Home / Package Selection
+       ============================================ -->
+  <div id="view-home" class="view view--active">
+    <!-- Header -->
+    <header class="header no-print">
+      <div class="container">
+        <h1 class="header__title">Screening Package Builder</h1>
+        <p class="header__subtitle">Special Duty & Board Package Builder</p>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main id="main" class="container">
+      <!-- Package Type Selection -->
+      <section class="mt-6">
+        <h2 class="text-lg font-bold mb-4">Select Package Type</h2>
+        <div id="package-types" class="package-grid">
+          <!-- Dynamically populated -->
+        </div>
+      </section>
+
+      <!-- Saved Packages -->
+      <section class="saved-packages">
+        <h2 class="saved-packages__title">Your Saved Packages</h2>
+        <div id="saved-packages-list">
+          <!-- Dynamically populated -->
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer no-print">
+      <div class="container">
+        <p class="text-sm text-secondary text-center">
+          Free and open source. <a href="https://github.com/jeranaias/screening-package-builder">View on GitHub</a>
+        </p>
+        <p class="text-sm text-secondary text-center mt-4">
+          Part of the <a href="https://jeranaias.github.io/usmc-tools/">USMC Tools</a> suite.
+        </p>
+      </div>
+    </footer>
+  </div>
+
+  <!-- ============================================
+       VIEW: Package Dashboard
+       ============================================ -->
+  <div id="view-dashboard" class="view">
+    <!-- Header -->
+    <header class="header no-print">
+      <div class="container">
+        <div class="header__nav">
+          <a href="#" id="btn-back-home" class="header__back">
+            &#8592; Home
+          </a>
+          <div class="text-center">
+            <h1 id="dashboard-title" class="header__title" style="font-size: var(--text-xl);">Package Dashboard</h1>
+            <p id="dashboard-subtitle" class="header__subtitle"></p>
+          </div>
+          <div class="header__actions">
+            <!-- Placeholder for alignment -->
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container" style="padding-bottom: 100px;">
+      <!-- Deadline Banner -->
+      <div id="deadline-banner" class="deadline-banner mt-4" style="display: none;">
+        <span class="deadline-banner__icon">&#128197;</span>
+        <span class="deadline-banner__text"></span>
+      </div>
+
+      <!-- Progress Section -->
+      <div class="card mt-4">
+        <div class="progress">
+          <div id="dashboard-progress-bar" class="progress__bar" style="width: 0%"></div>
+        </div>
+        <p id="dashboard-progress-text" class="progress__text">0% Complete</p>
+
+        <!-- Stats Grid -->
+        <div class="stats-grid">
+          <div id="stat-complete" class="stat-item">
+            <div class="stat-item__icon text-success">&#9989;</div>
+            <div class="stat-item__value">0</div>
+            <div class="stat-item__label">Complete</div>
+          </div>
+          <div id="stat-needed" class="stat-item">
+            <div class="stat-item__icon" style="color: var(--warning);">&#9888;</div>
+            <div class="stat-item__value">0</div>
+            <div class="stat-item__label">Needed</div>
+          </div>
+          <div id="stat-waivers" class="stat-item">
+            <div class="stat-item__icon text-error">&#128221;</div>
+            <div class="stat-item__value">0</div>
+            <div class="stat-item__label">Waivers</div>
+          </div>
+          <div id="stat-signatures" class="stat-item">
+            <div class="stat-item__icon" style="color: var(--secondary);">&#9997;</div>
+            <div class="stat-item__value">0</div>
+            <div class="stat-item__label">Signatures</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tabs -->
+      <div class="tabs mt-6 no-print">
+        <button class="tab tab--active" data-tab="checklist">&#128203; Checklist</button>
+        <button class="tab" data-tab="coversheet">&#128196; Cover Sheet</button>
+        <button class="tab" data-tab="routing">&#9997; Routing</button>
+      </div>
+
+      <!-- Tab Panels -->
+      <div id="tab-checklist" class="tab-panel tab-panel--active">
+        <div id="checklist-container">
+          <!-- Dynamically populated by ChecklistManager -->
+        </div>
+      </div>
+
+      <div id="tab-coversheet" class="tab-panel">
+        <div id="coversheet-container">
+          <!-- Dynamically populated by CoverSheetGenerator -->
+        </div>
+      </div>
+
+      <div id="tab-routing" class="tab-panel">
+        <div id="routing-container">
+          <!-- Dynamically populated by RoutingManager -->
+        </div>
+      </div>
+    </main>
+
+    <!-- Action Bar -->
+    <div class="action-bar no-print">
+      <button id="btn-export-pdf" class="btn btn--primary">
+        &#128196; Export PDF
+      </button>
+      <button id="btn-delete-package" class="btn btn--danger">
+        &#128465; Delete
+      </button>
+    </div>
+  </div>
+
+  <!-- ============================================
+       MODALS
+       ============================================ -->
+
+  <!-- Modal Overlay -->
+  <div id="modal-overlay" class="modal-overlay">
+
+    <!-- Document Edit Modal -->
+    <div id="document-modal" class="modal">
+      <div class="modal__header">
+        <h3 id="modal-doc-title" class="modal__title">Document Name</h3>
+      </div>
+      <div class="modal__body">
+        <input type="hidden" id="modal-doc-id">
+
+        <div class="mb-4">
+          <p id="modal-doc-description" class="text-sm text-secondary"></p>
+          <p class="text-sm mt-2">
+            <strong>Reference:</strong> <span id="modal-doc-reference"></span>
+          </p>
+        </div>
+
+        <div class="form-group">
+          <label class="label">Status</label>
+          <div class="radio-group">
+            <label class="radio-label">
+              <input type="radio" name="doc-status" value="incomplete" class="radio">
+              Not Started
+            </label>
+            <label class="radio-label">
+              <input type="radio" name="doc-status" value="complete" class="radio">
+              Complete
+            </label>
+            <label class="radio-label">
+              <input type="radio" name="doc-status" value="na" class="radio">
+              Not Applicable
+            </label>
+            <label class="radio-label">
+              <input type="radio" name="doc-status" value="waiver_needed" class="radio">
+              Waiver Required
+            </label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="label">Date Completed</label>
+          <input type="date" id="modal-doc-date" class="input">
+        </div>
+
+        <div class="form-group">
+          <label class="label">Notes</label>
+          <textarea id="modal-doc-notes" class="input textarea" placeholder="Add any notes..."></textarea>
+        </div>
+      </div>
+      <div class="modal__footer">
+        <button id="btn-cancel-document" class="btn btn--outline">Cancel</button>
+        <button id="btn-save-document" class="btn btn--primary">Save</button>
+      </div>
+    </div>
+
+    <!-- Routing Edit Modal -->
+    <div id="routing-modal" class="modal hidden">
+      <div class="modal__header">
+        <h3 id="routing-modal-title" class="modal__title">Edit Routing Step</h3>
+      </div>
+      <div class="modal__body">
+        <input type="hidden" id="routing-step-id">
+
+        <div class="form-group">
+          <label class="label">Endorser Name/Rank</label>
+          <input type="text" id="routing-name" class="input" placeholder="e.g., Capt M. Johnson">
+        </div>
+
+        <div class="form-group">
+          <label class="label">Status</label>
+          <div class="radio-group">
+            <label class="radio-label">
+              <input type="radio" name="routing-status" value="pending" class="radio">
+              Pending
+            </label>
+            <label class="radio-label">
+              <input type="radio" name="routing-status" value="signed" class="radio">
+              Signed
+            </label>
+            <label class="radio-label">
+              <input type="radio" name="routing-status" value="returned" class="radio">
+              Returned for Correction
+            </label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="label">Date Signed</label>
+          <input type="date" id="routing-date" class="input">
+        </div>
+
+        <div class="form-group">
+          <label class="label">Recommendation</label>
+          <div class="radio-group">
+            <label class="radio-label">
+              <input type="radio" name="routing-recommends" value="" class="radio">
+              Not Specified
+            </label>
+            <label class="radio-label">
+              <input type="radio" name="routing-recommends" value="yes" class="radio">
+              Recommends
+            </label>
+            <label class="radio-label">
+              <input type="radio" name="routing-recommends" value="no" class="radio">
+              Does Not Recommend
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="modal__footer">
+        <button id="btn-cancel-routing" class="btn btn--outline">Cancel</button>
+        <button id="btn-save-routing" class="btn btn--primary">Save</button>
+      </div>
+    </div>
+
+    <!-- New Package Modal -->
+    <div id="new-package-modal" class="modal hidden">
+      <div class="modal__header">
+        <h3 id="new-package-modal-title" class="modal__title">New Package</h3>
+      </div>
+      <div class="modal__body">
+        <input type="hidden" id="new-package-type">
+
+        <div class="form-group">
+          <label class="label label--required">Applicant Name (Last, First MI)</label>
+          <input type="text" id="new-package-name" class="input" placeholder="SMITH, John A.">
+        </div>
+
+        <div class="form-group">
+          <label class="label">Rank</label>
+          <select id="new-package-rank" class="input select">
+            <option value="">Select Rank</option>
+            <option value="Pvt">Pvt</option>
+            <option value="PFC">PFC</option>
+            <option value="LCpl">LCpl</option>
+            <option value="Cpl">Cpl</option>
+            <option value="Sgt">Sgt</option>
+            <option value="SSgt">SSgt</option>
+            <option value="GySgt">GySgt</option>
+            <option value="MSgt">MSgt</option>
+            <option value="1stSgt">1stSgt</option>
+            <option value="MGySgt">MGySgt</option>
+            <option value="SgtMaj">SgtMaj</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="label">Deadline</label>
+          <input type="date" id="new-package-deadline" class="input">
+          <p class="help-text">Package submission deadline</p>
+        </div>
+
+        <!-- WO Specific Fields -->
+        <div id="wo-specific-fields" style="display: none;">
+          <div class="form-group">
+            <label class="label">Target Board</label>
+            <input type="text" id="new-package-target-board" class="input" placeholder="FY26">
+          </div>
+        </div>
+
+        <!-- Recruiting Specific Fields -->
+        <div id="rec-specific-fields" style="display: none;">
+          <div class="form-group">
+            <label class="label">Preferred District</label>
+            <input type="text" id="new-package-preferred-district" class="input" placeholder="8th MCD">
+          </div>
+        </div>
+      </div>
+      <div class="modal__footer">
+        <button id="btn-cancel-new-package" class="btn btn--outline">Cancel</button>
+        <button id="btn-create-package" class="btn btn--primary">Create Package</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Theme Toggle -->
+  <button id="theme-toggle" class="theme-toggle no-print" title="Toggle theme">
+    &#9790;
+  </button>
+
+  <!-- Scripts -->
+  <script src="js/lib/storage.js"></script>
+  <script src="js/lib/date-utils.js"></script>
+  <script src="js/lib/theme.js"></script>
+  <script src="js/packages/warrant-officer.js"></script>
+  <script src="js/packages/recruiting.js"></script>
+  <script src="js/packages/index.js"></script>
+  <script src="js/checklist.js"></script>
+  <script src="js/cover-sheet.js"></script>
+  <script src="js/routing.js"></script>
+  <script src="js/export.js"></script>
+  <script src="js/app.js"></script>
+
+  <!-- Service Worker Registration -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('service-worker.js')
+        .then(reg => console.log('Service Worker registered'))
+        .catch(err => console.log('Service Worker registration failed:', err));
+    }
+  </script>
+</body>
+</html>
