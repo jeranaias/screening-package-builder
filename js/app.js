@@ -2,7 +2,38 @@
  * Screening Package Builder - Main Application
  * Checklist-driven package builder for USMC special duty assignments
  */
+
+/**
+ * PWA Install prompt handling
+ */
+let deferredInstallPrompt = null;
+
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredInstallPrompt = e;
+  const installBtn = document.getElementById('pwa-install-btn');
+  if (installBtn) {
+    installBtn.style.display = 'inline-block';
+  }
+});
+
+function installPWA() {
+  if (!deferredInstallPrompt) {
+    alert('To install: Use your browser menu → "Add to Home Screen" or "Install App"');
+    return;
+  }
+  deferredInstallPrompt.prompt();
+  deferredInstallPrompt.userChoice.then((choiceResult) => {
+    deferredInstallPrompt = null;
+    const installBtn = document.getElementById('pwa-install-btn');
+    if (installBtn) {
+      installBtn.style.display = 'none';
+    }
+  });
+}
+
 const App = {
+  installPWA,
   currentView: 'home',
   currentPackage: null,
   currentTab: 'checklist',
