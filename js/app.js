@@ -12,11 +12,19 @@ const App = {
     // Initialize theme
     ThemeManager.init();
 
+    // Initialize preview manager
+    if (typeof PreviewManager !== 'undefined') {
+      PreviewManager.init();
+    }
+
     // Bind global events
     this.bindEvents();
 
     // Load saved packages and render home view
     this.showView('home');
+
+    // Show status indicator
+    this.updateStatus('saved');
   },
 
   // Bind global event handlers
@@ -64,10 +72,91 @@ const App = {
 
     // Keyboard shortcuts
     document.addEventListener('keydown', (e) => {
+      // Escape - close modals/preview
       if (e.key === 'Escape') {
-        this.closeAllModals();
+        if (typeof PreviewManager !== 'undefined' && PreviewManager.enabled) {
+          PreviewManager.close();
+        } else {
+          this.closeAllModals();
+        }
+      }
+
+      // Ctrl+P - toggle preview
+      if (e.ctrlKey && e.key === 'p') {
+        e.preventDefault();
+        if (typeof PreviewManager !== 'undefined') {
+          PreviewManager.toggle();
+        }
+      }
+
+      // Ctrl+S - save current package
+      if (e.ctrlKey && e.key === 's') {
+        e.preventDefault();
+        this.saveCurrentPackage();
       }
     });
+  },
+
+  // Update status indicator
+  updateStatus(status) {
+    const indicator = document.getElementById('status-indicator');
+    if (!indicator) return;
+
+    indicator.className = 'status-indicator';
+
+    switch (status) {
+      case 'saving':
+        indicator.classList.add('saving');
+        indicator.textContent = 'Saving...';
+        break;
+      case 'saved':
+        indicator.classList.add('saved');
+        indicator.textContent = 'All changes saved';
+        break;
+      case 'offline':
+        indicator.classList.add('offline');
+        indicator.textContent = 'Offline mode';
+        break;
+    }
+  },
+
+  // Show toast notification
+  showToast(message, type = 'info') {
+    const existing = document.querySelector('.toast');
+    if (existing) existing.remove();
+
+    const toast = document.createElement('div');
+    toast.className = `toast toast-${type}`;
+    toast.textContent = message;
+    document.body.appendChild(toast);
+
+    setTimeout(() => toast.classList.add('show'), 10);
+    setTimeout(() => {
+      toast.classList.remove('show');
+      setTimeout(() => toast.remove(), 300);
+    }, 3000);
+  },
+
+  // Save current package
+  saveCurrentPackage() {
+    if (!this.currentPackage) {
+      this.showToast('No package to save', 'warning');
+      return;
+    }
+
+    this.updateStatus('saving');
+    this.currentPackage.lastUpdated = new Date().toISOString();
+    Storage.save(this.currentPackage.id, this.currentPackage);
+
+    setTimeout(() => {
+      this.updateStatus('saved');
+      this.showToast('Package saved successfully', 'success');
+    }, 300);
+
+    // Trigger preview update
+    if (typeof PreviewManager !== 'undefined') {
+      PreviewManager.scheduleUpdate();
+    }
   },
 
   // Show a specific view
