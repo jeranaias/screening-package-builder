@@ -171,10 +171,27 @@
     <!-- Footer -->
     <footer class="footer no-print">
       <div class="container">
-        <p class="text-sm text-secondary text-center">
+        <!-- Offline Install Section -->
+        <div id="install-section" class="install-section" style="display: none;">
+          <button id="install-btn" class="btn btn--primary btn--sm">
+            &#128229; Install for Offline Use
+          </button>
+        </div>
+
+        <details class="offline-guide">
+          <summary class="offline-guide__title">&#128268; Works Offline - How to Install</summary>
+          <div class="offline-guide__content">
+            <p><strong>Chrome/Edge:</strong> Click the install icon in the address bar, or Menu > "Install Screening Package Builder"</p>
+            <p><strong>Safari (iOS):</strong> Tap Share > "Add to Home Screen"</p>
+            <p><strong>Firefox:</strong> Bookmark this page for quick access</p>
+            <p class="text-xs mt-2">Once installed, this tool works completely offline. All data stays on your device.</p>
+          </div>
+        </details>
+
+        <p class="text-sm text-secondary text-center mt-4">
           Free and open source. <a href="https://github.com/jeranaias/screening-package-builder">View on GitHub</a>
         </p>
-        <p class="text-sm text-secondary text-center mt-4">
+        <p class="text-sm text-secondary text-center mt-2">
           Part of the <a href="https://jeranaias.github.io/usmc-tools/">USMC Tools</a> suite.
         </p>
         <p class="text-sm text-secondary text-center mt-2">
@@ -491,13 +508,47 @@
   <script src="js/preview-manager.js"></script>
   <script src="js/app.js"></script>
 
-  <!-- Service Worker Registration -->
+  <!-- Service Worker Registration and PWA Install -->
   <script>
+    // Register Service Worker
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('service-worker.js')
         .then(reg => console.log('Service Worker registered'))
         .catch(err => console.log('Service Worker registration failed:', err));
     }
+
+    // PWA Install Prompt
+    let deferredPrompt;
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+
+      // Show install button
+      const installSection = document.getElementById('install-section');
+      const installBtn = document.getElementById('install-btn');
+
+      if (installSection) installSection.style.display = 'block';
+
+      if (installBtn) {
+        installBtn.addEventListener('click', async () => {
+          if (deferredPrompt) {
+            deferredPrompt.prompt();
+            const { outcome } = await deferredPrompt.userChoice;
+            if (outcome === 'accepted') {
+              installSection.style.display = 'none';
+            }
+            deferredPrompt = null;
+          }
+        });
+      }
+    });
+
+    // Hide install button after app installed
+    window.addEventListener('appinstalled', () => {
+      const installSection = document.getElementById('install-section');
+      if (installSection) installSection.style.display = 'none';
+      deferredPrompt = null;
+    });
   </script>
 </body>
 </html>

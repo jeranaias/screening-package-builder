@@ -3,7 +3,7 @@
  * Enables offline functionality
  */
 
-const CACHE_NAME = 'screening-package-builder-v3';
+const CACHE_NAME = 'screening-package-builder-v4';
 const urlsToCache = [
   '/',
   '/index.html',

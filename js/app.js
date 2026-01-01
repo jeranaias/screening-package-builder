@@ -493,18 +493,24 @@ const App = {
     }
   },
 
-  // Bind dashboard events
+  // Bind dashboard events (only once)
   bindDashboardEvents() {
+    // Prevent duplicate bindings
+    if (this._dashboardEventsBound) return;
+    this._dashboardEventsBound = true;
+
     // Back button
     document.getElementById('btn-back-home')?.addEventListener('click', () => {
       this.showView('home');
+      this._dashboardEventsBound = false; // Reset for next dashboard load
     });
 
-    // Tab buttons
-    document.querySelectorAll('.tab').forEach(tab => {
-      tab.addEventListener('click', () => {
+    // Tab buttons - use event delegation for reliable tab switching
+    document.querySelector('.tabs')?.addEventListener('click', (e) => {
+      const tab = e.target.closest('.tab');
+      if (tab && tab.dataset.tab) {
         this.switchTab(tab.dataset.tab);
-      });
+      }
     });
 
     // Export button
