@@ -2027,55 +2027,20 @@ body {
 }
 
 /* ============================================
-   Offline Installation Guide
+   PWA Install Guide (matches other tools)
    ============================================ */
-.install-section {
-  text-align: center;
-  margin-bottom: var(--space-4);
-  padding: var(--space-3);
-  background: var(--success-light);
-  border-radius: var(--radius-md);
-}
-
-.offline-guide {
-  background: var(--bg-tertiary);
-  border-radius: var(--radius-md);
-  padding: var(--space-3);
-  margin-bottom: var(--space-4);
-}
-
-.offline-guide__title {
-  cursor: pointer;
-  font-weight: var(--font-semibold);
-  font-size: var(--text-sm);
-  color: var(--text-secondary);
+#install-guide summary {
   list-style: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--space-2);
 }
 
-.offline-guide__title::-webkit-details-marker {
+#install-guide summary::-webkit-details-marker {
   display: none;
 }
 
-.offline-guide__content {
-  margin-top: var(--space-3);
-  font-size: var(--text-sm);
-  color: var(--text-secondary);
-  text-align: left;
-}
-
-.offline-guide__content p {
-  margin: var(--space-2) 0;
-  padding-left: var(--space-3);
-}
-
-.offline-guide[open] .offline-guide__title::before {
+#install-guide[open] summary::before {
   content: "▼ ";
 }
 
-.offline-guide:not([open]) .offline-guide__title::before {
+#install-guide:not([open]) summary::before {
   content: "▶ ";
 }
