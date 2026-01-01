@@ -3,7 +3,7 @@
  * Enables offline functionality
  */
 
-const CACHE_NAME = 'screening-package-builder-v2';
+const CACHE_NAME = 'screening-package-builder-v3';
 const urlsToCache = [
   '/',
   '/index.html',
@@ -21,6 +21,9 @@ const urlsToCache = [
   '/js/packages/recruiting.js',
   '/js/packages/index.js',
   '/lib/jspdf.umd.min.js',
+  '/data/forms.json',
+  '/data/regulations.json',
+  '/data/guidance.json',
   '/manifest.json',
   '/assets/icon-192.svg',
   '/assets/icon-512.svg'

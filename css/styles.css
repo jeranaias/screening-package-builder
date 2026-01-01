@@ -1593,3 +1593,435 @@ body {
   right: var(--space-4);
   transform: translateY(-50%);
 }
+
+/* ============================================
+   Enhanced Checklist - Phase View
+   ============================================ */
+.checklist-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-4);
+  gap: var(--space-4);
+  flex-wrap: wrap;
+}
+
+.view-toggle {
+  display: flex;
+  background: var(--bg-tertiary);
+  border-radius: var(--radius-md);
+  padding: 2px;
+}
+
+.view-toggle__btn {
+  padding: var(--space-2) var(--space-4);
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  transition: all 0.2s;
+}
+
+.view-toggle__btn:hover {
+  color: var(--text-primary);
+}
+
+.view-toggle__btn.active {
+  background: var(--surface);
+  color: var(--primary);
+  font-weight: var(--font-semibold);
+  box-shadow: var(--shadow-sm);
+}
+
+.regulation-banner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-3) var(--space-4);
+  background: var(--info-light);
+  border: 1px solid var(--info);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-6);
+  gap: var(--space-4);
+}
+
+.regulation-banner__content {
+  color: var(--secondary);
+  font-size: var(--text-sm);
+}
+
+/* Phase Cards */
+.phases-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.phase-card {
+  background: var(--surface);
+  border: 2px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.phase-card.current {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(139, 0, 0, 0.1);
+}
+
+.phase-card.complete {
+  border-color: var(--success);
+}
+
+.phase-card.in-progress {
+  border-color: var(--warning);
+}
+
+.phase-card__header {
+  display: flex;
+  align-items: center;
+  padding: var(--space-4);
+  gap: var(--space-4);
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border-light);
+}
+
+.phase-card__number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: var(--primary);
+  color: var(--white);
+  font-weight: var(--font-bold);
+  font-size: var(--text-lg);
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.phase-card.complete .phase-card__number {
+  background: var(--success);
+}
+
+.phase-card.in-progress .phase-card__number {
+  background: var(--warning);
+}
+
+.phase-card__info {
+  flex: 1;
+}
+
+.phase-card__title {
+  font-size: var(--text-lg);
+  font-weight: var(--font-bold);
+  margin: 0;
+  color: var(--text-primary);
+}
+
+.phase-card__description {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  margin: var(--space-1) 0 0;
+}
+
+.phase-card__duration {
+  display: inline-block;
+  font-size: var(--text-xs);
+  color: var(--text-tertiary);
+  background: var(--bg-tertiary);
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+  margin-top: var(--space-2);
+}
+
+.phase-card__status {
+  font-size: var(--text-2xl);
+}
+
+.phase-warning {
+  padding: var(--space-3) var(--space-4);
+  background: var(--warning-light);
+  color: var(--warning);
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  border-bottom: 1px solid var(--warning);
+}
+
+.phase-critical {
+  padding: var(--space-3) var(--space-4);
+  background: var(--error-light);
+  color: var(--error);
+  font-size: var(--text-sm);
+  font-weight: var(--font-bold);
+  border-bottom: 1px solid var(--error);
+}
+
+.phase-documents {
+  padding: var(--space-4);
+}
+
+/* Enhanced Checklist Items */
+.checklist-item {
+  background: var(--surface);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-3);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.checklist-item:hover {
+  border-color: var(--border-medium);
+}
+
+.checklist-item.expanded {
+  box-shadow: var(--shadow-md);
+}
+
+.checklist-item__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-3) var(--space-4);
+  cursor: pointer;
+  gap: var(--space-3);
+}
+
+.checklist-item__info {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex: 1;
+  flex-wrap: wrap;
+}
+
+.checklist-item__number {
+  font-weight: var(--font-bold);
+  color: var(--text-tertiary);
+  min-width: 24px;
+}
+
+.checklist-item__name {
+  font-weight: var(--font-semibold);
+  color: var(--text-primary);
+}
+
+.checklist-item__badges {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.checklist-item__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.checklist-item__icon {
+  font-size: var(--text-xl);
+}
+
+.expand-btn {
+  padding: var(--space-1) var(--space-2);
+  color: var(--text-tertiary);
+}
+
+/* Document Details Panel */
+.checklist-item__details {
+  display: none;
+  border-top: 1px solid var(--border-light);
+}
+
+.checklist-item__details.show {
+  display: block;
+}
+
+.doc-details {
+  padding: var(--space-4);
+  background: var(--bg-secondary);
+}
+
+.doc-details__description {
+  color: var(--text-secondary);
+  margin: 0 0 var(--space-3);
+  line-height: var(--leading-relaxed);
+}
+
+.doc-details__reference {
+  font-size: var(--text-sm);
+  color: var(--text-tertiary);
+  padding: var(--space-2) var(--space-3);
+  background: var(--bg-tertiary);
+  border-radius: var(--radius-sm);
+  margin-bottom: var(--space-4);
+}
+
+.doc-details__links {
+  display: flex;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+  flex-wrap: wrap;
+}
+
+.doc-details__section {
+  margin-bottom: var(--space-4);
+}
+
+.doc-details__section h5 {
+  font-size: var(--text-sm);
+  font-weight: var(--font-bold);
+  color: var(--text-primary);
+  margin: 0 0 var(--space-2);
+}
+
+.doc-instructions {
+  margin: 0;
+  padding-left: var(--space-6);
+  color: var(--text-secondary);
+  font-size: var(--text-sm);
+}
+
+.doc-instructions li {
+  margin-bottom: var(--space-2);
+  line-height: var(--leading-relaxed);
+}
+
+.doc-format {
+  margin: 0;
+  padding-left: var(--space-5);
+  color: var(--text-secondary);
+  font-size: var(--text-sm);
+}
+
+.doc-format li {
+  margin-bottom: var(--space-1);
+}
+
+.doc-tips {
+  background: var(--warning-light);
+  padding: var(--space-3);
+  border-radius: var(--radius-md);
+  border-left: 3px solid var(--warning);
+}
+
+.doc-tips h5 {
+  color: var(--warning);
+}
+
+.doc-tips ul {
+  margin: 0;
+  padding-left: var(--space-5);
+  color: var(--text-secondary);
+  font-size: var(--text-sm);
+}
+
+.doc-tips li {
+  margin-bottom: var(--space-1);
+}
+
+.doc-details__status {
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--border-light);
+  margin-top: var(--space-4);
+}
+
+.status-row {
+  display: flex;
+  gap: var(--space-4);
+  margin-bottom: var(--space-3);
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+}
+
+.doc-notes {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  padding: var(--space-2) var(--space-3);
+  background: var(--bg-tertiary);
+  border-radius: var(--radius-sm);
+  margin-bottom: var(--space-3);
+}
+
+/* Badge enhancements */
+.badge--info {
+  background: var(--info-light);
+  color: var(--info);
+}
+
+.badge--primary {
+  background: var(--primary);
+  color: var(--white);
+}
+
+/* Ghost button */
+.btn--ghost {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+}
+
+.btn--ghost:hover {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+}
+
+/* Compact mode for phase view */
+.checklist-item.compact {
+  margin-bottom: var(--space-2);
+}
+
+.checklist-item.compact .checklist-item__header {
+  padding: var(--space-2) var(--space-3);
+}
+
+/* Status-specific styling */
+.checklist-item--complete {
+  border-left: 3px solid var(--success);
+}
+
+.checklist-item--waiver {
+  border-left: 3px solid var(--warning);
+  background: var(--warning-light);
+}
+
+.checklist-item--na {
+  opacity: 0.7;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .checklist-controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .view-toggle {
+    justify-content: center;
+  }
+
+  .regulation-banner {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .phase-card__header {
+    flex-wrap: wrap;
+  }
+
+  .checklist-item__info {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .doc-details__links {
+    flex-direction: column;
+  }
+
+  .doc-details__links .btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
