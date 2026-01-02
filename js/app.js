@@ -227,12 +227,9 @@ const App = {
     availableTypes.forEach(type => {
       typesHtml += `
         <div class="package-card" data-package-type="${type.id}">
-          <div class="package-card__icon">${type.icon}</div>
           <h3 class="package-card__title">${type.name}</h3>
           <p class="package-card__description">${type.description}</p>
-          <div class="package-card__action">
-            Start Package &#8594;
-          </div>
+          <button type="button" class="btn btn-primary btn--sm">Start Package</button>
         </div>
       `;
     });
@@ -241,9 +238,9 @@ const App = {
     comingSoonTypes.forEach(type => {
       typesHtml += `
         <div class="package-card package-card--disabled">
-          <div class="package-card__icon">${type.icon}</div>
           <h3 class="package-card__title">${type.name}</h3>
           <p class="package-card__description">${type.description}</p>
+          <span class="package-card__coming-soon">Coming Soon</span>
         </div>
       `;
     });
@@ -274,23 +271,19 @@ const App = {
     } else {
       savedPackagesContainer.innerHTML = savedPackages.map(pkg => {
         const progress = PackageRegistry.calculateProgress(pkg);
-        const template = PackageRegistry.getTemplate(pkg.packageType);
 
         return `
           <div class="saved-package-item" data-package-id="${pkg.id}">
             <div class="saved-package-item__info">
               <div class="saved-package-item__name">
-                ${template?.icon || ''} ${pkg.packageName} Package
-                ${pkg.applicantName ? ` - ${pkg.applicantRank} ${pkg.applicantName}` : ''}
+                ${pkg.packageName} Package${pkg.applicantName ? ` - ${pkg.applicantRank} ${pkg.applicantName}` : ''}
               </div>
               <div class="saved-package-item__meta">
                 Last updated: ${DateUtils.formatMilitary(pkg.lastUpdated)}
-                ${pkg.targetBoard ? ` | ${pkg.targetBoard}` : ''}
               </div>
             </div>
             <div class="saved-package-item__progress">
-              <div class="saved-package-item__percentage">${progress.percentage}%</div>
-              <div class="text-sm text-secondary">Complete</div>
+              <span class="badge badge--${progress.percentage === 100 ? 'success' : 'secondary'}">${progress.percentage}%</span>
             </div>
           </div>
         `;
