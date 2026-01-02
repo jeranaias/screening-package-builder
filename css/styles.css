@@ -2044,3 +2044,173 @@ body {
 #install-guide:not([open]) summary::before {
   content: "▶ ";
 }
+
+/* ============================================
+   Good Design Pattern - Shared Styles
+   ============================================ */
+
+/* Header subtitle */
+.subtitle {
+  font-size: var(--text-sm);
+  opacity: 0.9;
+  margin-top: var(--space-1);
+}
+
+/* Intro tagline link */
+.intro-link {
+  text-align: center;
+  margin: var(--space-4) 0 var(--space-6);
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+}
+
+.intro-link a {
+  color: var(--primary);
+  text-decoration: none;
+  font-weight: var(--font-medium);
+}
+
+.intro-link a:hover {
+  text-decoration: underline;
+}
+
+/* Form sections with card styling */
+.form-section {
+  background: var(--surface);
+  padding: var(--space-6);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-light);
+  margin-bottom: var(--space-6);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Section title with gold left accent */
+.section-title {
+  color: var(--primary);
+  text-transform: uppercase;
+  font-size: var(--text-base);
+  font-weight: var(--font-bold);
+  letter-spacing: 0.05em;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin: 0 0 var(--space-4);
+}
+
+.section-title::before {
+  content: '';
+  width: 4px;
+  height: 18px;
+  background: var(--gold);
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+/* Quick toolbar for dashboard */
+.quick-toolbar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-6);
+  flex-wrap: wrap;
+}
+
+/* Save indicator */
+.save-indicator {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  margin-left: auto;
+}
+
+.save-indicator__dot {
+  width: 8px;
+  height: 8px;
+  background: var(--success);
+  border-radius: 50%;
+}
+
+/* Button variants (non-BEM) */
+.btn.btn-primary {
+  background: var(--primary);
+  color: var(--white);
+}
+
+.btn.btn-primary:hover:not(:disabled) {
+  background: var(--primary-dark);
+}
+
+.btn.btn-secondary {
+  background: transparent;
+  border: 1px solid var(--border-medium);
+  color: var(--text-primary);
+}
+
+.btn.btn-secondary:hover:not(:disabled) {
+  background: var(--bg-secondary);
+}
+
+/* Tabs styling */
+.tabs {
+  display: flex;
+  gap: var(--space-1);
+  margin-bottom: var(--space-6);
+  border-bottom: 2px solid var(--border-light);
+}
+
+.tab {
+  padding: var(--space-3) var(--space-6);
+  background: transparent;
+  border: none;
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  color: var(--text-secondary);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+  transition: all 0.15s;
+}
+
+.tab:hover {
+  color: var(--text-primary);
+}
+
+.tab.tab--active {
+  color: var(--primary);
+  border-bottom-color: var(--primary);
+  font-weight: var(--font-semibold);
+}
+
+/* Tab panels */
+.tab-panel {
+  display: none;
+}
+
+.tab-panel.tab-panel--active {
+  display: block;
+}
+
+/* Regulation banner with gold accent */
+.regulation-banner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-3) var(--space-4);
+  background: linear-gradient(90deg, rgba(255, 195, 0, 0.1) 0%, rgba(255, 195, 0, 0.05) 100%);
+  border: 1px solid var(--gold);
+  border-left: 4px solid var(--gold);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-6);
+  gap: var(--space-4);
+}
+
+.regulation-banner__content {
+  color: var(--text-primary);
+  font-size: var(--text-sm);
+}
+
+.regulation-banner__content strong {
+  color: var(--primary);
+}

@@ -135,49 +135,52 @@
        VIEW: Home / Package Selection
        ============================================ -->
   <div id="view-home" class="view view--active">
-    <!-- Header -->
-    <header class="header no-print">
-      <div class="container">
-        <h1 class="header__title">Screening Package Builder</h1>
-        <p class="header__subtitle">Special Duty & Board Package Builder</p>
-      </div>
-      <div class="header-controls">
-        <div id="status-indicator" class="status-indicator status-indicator--saved">
-          <span class="status-indicator__dot"></span>
-          <span class="status-indicator__text">Ready</span>
+    <div class="container">
+      <!-- Header -->
+      <header class="header no-print">
+        <div class="header-controls">
+          <button type="button" class="theme-toggle" onclick="ThemeManager.cycle()" aria-label="Toggle theme">
+            <span id="themeIcon" class="theme-icon">&#9788;</span>
+          </button>
         </div>
-      </div>
-    </header>
+        <h1>SCREENING PACKAGE BUILDER</h1>
+        <p class="subtitle">B-Billet & Board Package Tool</p>
+      </header>
 
-    <!-- Main Content -->
-    <main id="main" class="container">
-      <!-- Package Type Selection -->
-      <section class="mt-6">
-        <h2 class="text-lg font-bold mb-4">Select Package Type</h2>
-        <div id="package-types" class="package-grid">
-          <!-- Dynamically populated -->
+      <p class="intro-link">
+        Free tool for Marines · <a href="https://github.com/jeranaias/screening-package-builder#readme" target="_blank">Documentation & Guide &rarr;</a>
+      </p>
+
+      <!-- Main Content -->
+      <main id="main">
+        <!-- Package Type Selection -->
+        <div class="form-section">
+          <h2 class="section-title">Select Package Type</h2>
+          <p class="help-text">Choose the type of screening package you need to build.</p>
+          <div id="package-types" class="package-grid">
+            <!-- Dynamically populated -->
+          </div>
         </div>
-      </section>
 
-      <!-- Saved Packages -->
-      <section class="saved-packages">
-        <h2 class="saved-packages__title">Your Saved Packages</h2>
-        <div id="saved-packages-list">
-          <!-- Dynamically populated -->
+        <!-- Saved Packages -->
+        <div class="form-section">
+          <h2 class="section-title">Your Saved Packages</h2>
+          <p class="help-text">Resume working on a previously started package.</p>
+          <div id="saved-packages-list">
+            <!-- Dynamically populated -->
+          </div>
         </div>
-      </section>
 
-      <!-- Install App / Offline Guide -->
-      <details class="card mb-4 no-print" id="install-guide">
-        <summary class="card__title" style="cursor: pointer; padding: var(--space-4);">
-          Install for Offline Use
-        </summary>
-        <div class="p-4">
-          <div class="text-sm text-secondary">
+        <!-- Install App / Offline Guide -->
+        <details class="form-section no-print" id="install-guide">
+          <summary class="section-title" style="cursor: pointer; margin-bottom: 0;">
+            Install for Offline Use
+          </summary>
+          <div class="help-text" style="margin-top: 16px;">
             <p style="margin-bottom: 1rem;"><strong>This tool works offline!</strong> After your first visit, you can use it without internet.</p>
 
             <!-- Install Button (shown when PWA install is available) -->
-            <button type="button" id="pwa-install-btn" class="btn btn--primary btn--sm mb-4" style="display: none;" onclick="App.installPWA()">
+            <button type="button" id="pwa-install-btn" class="btn btn-primary" style="display: none; margin-bottom: 1rem;" onclick="App.installPWA()">
               Install App
             </button>
 
@@ -189,129 +192,124 @@
 
             <p style="margin-bottom: 0.5rem;"><strong>Android:</strong></p>
             <p style="margin-bottom: 1rem;">Tap the menu (3 dots) > "Add to Home Screen" or "Install App"</p>
-
-            <p style="margin-top: 1rem; opacity: 0.8;"><em>Once installed, the app icon appears on your home screen and works without internet.</em></p>
           </div>
-        </div>
-      </details>
-    </main>
+        </details>
+      </main>
 
-    <!-- Footer -->
-    <footer class="footer no-print">
-      <div class="container">
-        <p class="text-sm text-secondary text-center">
-          Free and open source. <a href="https://github.com/jeranaias/screening-package-builder">View on GitHub</a>
+      <!-- Footer -->
+      <footer class="footer no-print">
+        <p>
+          Free and open source · <a href="https://github.com/jeranaias/screening-package-builder">View on GitHub</a>
         </p>
-        <p class="text-sm text-secondary text-center mt-2">
-          Part of the <a href="https://jeranaias.github.io/usmc-tools/">USMC Tools</a> suite.
+        <p>
+          Part of the <a href="https://jeranaias.github.io/usmc-tools/">USMC Tools</a> suite
         </p>
-        <p class="text-sm text-secondary text-center mt-2">
-          Keyboard: <span class="kbd">Ctrl</span>+<span class="kbd">P</span> Preview &nbsp; <span class="kbd">Ctrl</span>+<span class="kbd">S</span> Save &nbsp; <span class="kbd">Esc</span> Close
+        <p class="kbd-hints">
+          <span class="kbd">Ctrl</span>+<span class="kbd">P</span> Preview
+          <span class="kbd">Ctrl</span>+<span class="kbd">S</span> Save
+          <span class="kbd">Esc</span> Close
         </p>
-      </div>
-    </footer>
+      </footer>
+    </div>
   </div>
 
   <!-- ============================================
        VIEW: Package Dashboard
        ============================================ -->
   <div id="view-dashboard" class="view">
-    <!-- Header -->
-    <header class="header no-print">
-      <div class="container">
-        <div class="header__nav">
-          <a href="#" id="btn-back-home" class="header__back">
-            &#8592; Home
-          </a>
-          <div class="text-center">
-            <h1 id="dashboard-title" class="header__title" style="font-size: var(--text-xl);">Package Dashboard</h1>
-            <p id="dashboard-subtitle" class="header__subtitle"></p>
-          </div>
-          <div class="header__actions">
-            <button type="button" id="preview-toggle" class="btn btn--sm btn--outline" style="color: white; border-color: rgba(255,255,255,0.5);">
-              &#128065; Live Preview
-            </button>
-          </div>
+    <div class="container">
+      <!-- Header -->
+      <header class="header no-print">
+        <div class="header-controls">
+          <button type="button" class="theme-toggle" onclick="ThemeManager.cycle()" aria-label="Toggle theme">
+            <span class="theme-icon">&#9788;</span>
+          </button>
+        </div>
+        <h1 id="dashboard-title">PACKAGE DASHBOARD</h1>
+        <p id="dashboard-subtitle" class="subtitle"></p>
+      </header>
+
+      <!-- Quick Toolbar -->
+      <div class="quick-toolbar no-print">
+        <a href="#" id="btn-back-home" class="btn btn-secondary">&larr; Back to Home</a>
+        <button type="button" id="preview-toggle" class="btn btn-primary">Live Preview</button>
+        <div id="save-indicator" class="save-indicator">
+          <span class="save-indicator__dot"></span>
+          <span>Saved</span>
         </div>
       </div>
-      <div class="header-controls">
-        <div id="save-indicator" class="status-indicator status-indicator--saved">
-          <span class="status-indicator__dot"></span>
-          <span class="status-indicator__text">Saved</span>
+
+      <!-- Main Content -->
+      <main style="padding-bottom: 100px;">
+        <!-- Deadline Banner -->
+        <div id="deadline-banner" class="deadline-banner" style="display: none;">
+          <span class="deadline-banner__icon">&#128197;</span>
+          <span class="deadline-banner__text"></span>
         </div>
-      </div>
-    </header>
 
-    <!-- Main Content -->
-    <main class="container" style="padding-bottom: 100px;">
-      <!-- Deadline Banner -->
-      <div id="deadline-banner" class="deadline-banner mt-4" style="display: none;">
-        <span class="deadline-banner__icon">&#128197;</span>
-        <span class="deadline-banner__text"></span>
-      </div>
+        <!-- Progress Section -->
+        <div class="form-section">
+          <h2 class="section-title">Package Progress</h2>
+          <div class="progress">
+            <div id="dashboard-progress-bar" class="progress__bar" style="width: 0%"></div>
+          </div>
+          <p id="dashboard-progress-text" class="progress__text">0% Complete</p>
 
-      <!-- Progress Section -->
-      <div class="card mt-4">
-        <div class="progress">
-          <div id="dashboard-progress-bar" class="progress__bar" style="width: 0%"></div>
-        </div>
-        <p id="dashboard-progress-text" class="progress__text">0% Complete</p>
-
-        <!-- Stats Grid -->
-        <div class="stats-grid">
-          <div id="stat-complete" class="stat-item">
-            <div class="stat-item__icon text-success">&#9989;</div>
-            <div class="stat-item__value">0</div>
-            <div class="stat-item__label">Complete</div>
-          </div>
-          <div id="stat-needed" class="stat-item">
-            <div class="stat-item__icon" style="color: var(--warning);">&#9888;</div>
-            <div class="stat-item__value">0</div>
-            <div class="stat-item__label">Needed</div>
-          </div>
-          <div id="stat-waivers" class="stat-item">
-            <div class="stat-item__icon text-error">&#128221;</div>
-            <div class="stat-item__value">0</div>
-            <div class="stat-item__label">Waivers</div>
-          </div>
-          <div id="stat-signatures" class="stat-item">
-            <div class="stat-item__icon" style="color: var(--secondary);">&#9997;</div>
-            <div class="stat-item__value">0</div>
-            <div class="stat-item__label">Signatures</div>
+          <!-- Stats Grid -->
+          <div class="stats-grid">
+            <div id="stat-complete" class="stat-item">
+              <div class="stat-item__icon text-success">&#9989;</div>
+              <div class="stat-item__value">0</div>
+              <div class="stat-item__label">Complete</div>
+            </div>
+            <div id="stat-needed" class="stat-item">
+              <div class="stat-item__icon" style="color: var(--warning);">&#9888;</div>
+              <div class="stat-item__value">0</div>
+              <div class="stat-item__label">Needed</div>
+            </div>
+            <div id="stat-waivers" class="stat-item">
+              <div class="stat-item__icon text-error">&#128221;</div>
+              <div class="stat-item__value">0</div>
+              <div class="stat-item__label">Waivers</div>
+            </div>
+            <div id="stat-signatures" class="stat-item">
+              <div class="stat-item__icon" style="color: var(--secondary);">&#9997;</div>
+              <div class="stat-item__value">0</div>
+              <div class="stat-item__label">Signatures</div>
+            </div>
           </div>
         </div>
-      </div>
 
-      <!-- Tabs -->
-      <div class="tabs mt-6 no-print">
-        <button class="tab tab--active" data-tab="checklist">&#128203; Checklist</button>
-        <button class="tab" data-tab="coversheet">&#128196; Cover Sheet</button>
-        <button class="tab" data-tab="routing">&#9997; Routing</button>
-      </div>
-
-      <!-- Tab Panels -->
-      <div id="tab-checklist" class="tab-panel tab-panel--active">
-        <div id="checklist-container">
-          <!-- Dynamically populated by ChecklistManager -->
+        <!-- Tabs -->
+        <div class="tabs no-print">
+          <button class="tab tab--active" data-tab="checklist">Checklist</button>
+          <button class="tab" data-tab="coversheet">Cover Sheet</button>
+          <button class="tab" data-tab="routing">Routing</button>
         </div>
-      </div>
 
-      <div id="tab-coversheet" class="tab-panel">
-        <div id="coversheet-container">
-          <!-- Dynamically populated by CoverSheetGenerator -->
+        <!-- Tab Panels -->
+        <div id="tab-checklist" class="tab-panel tab-panel--active">
+          <div id="checklist-container">
+            <!-- Dynamically populated by ChecklistManager -->
+          </div>
         </div>
-      </div>
 
-      <div id="tab-routing" class="tab-panel">
-        <div id="routing-container">
-          <!-- Dynamically populated by RoutingManager -->
+        <div id="tab-coversheet" class="tab-panel">
+          <div id="coversheet-container">
+            <!-- Dynamically populated by CoverSheetGenerator -->
+          </div>
         </div>
-      </div>
-    </main>
 
-    <!-- Action Bar -->
-    <div class="action-bar no-print">
-      <button id="btn-export-pdf" class="btn btn--primary">
+        <div id="tab-routing" class="tab-panel">
+          <div id="routing-container">
+            <!-- Dynamically populated by RoutingManager -->
+          </div>
+        </div>
+      </main>
+
+      <!-- Action Bar -->
+      <div class="action-bar no-print">
+        <button id="btn-export-pdf" class="btn btn-primary">
         &#128196; Export PDF
       </button>
       <button id="btn-delete-package" class="btn btn--danger">
