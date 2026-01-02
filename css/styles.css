@@ -1172,29 +1172,26 @@ body {
 }
 
 /* ============================================
-   Theme Toggle
+   Theme Toggle (in header)
    ============================================ */
-.theme-toggle {
-  position: fixed;
-  bottom: var(--space-4);
-  right: var(--space-4);
-  background: var(--surface);
-  border: 1px solid var(--border-medium);
+.header .theme-toggle {
+  position: static;
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: var(--radius-full);
-  width: 48px;
-  height: 48px;
+  width: 36px;
+  height: 36px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  box-shadow: var(--shadow-md);
-  z-index: 50;
   transition: all 0.15s ease;
-  font-size: var(--text-lg);
+  font-size: var(--text-base);
+  color: var(--white);
 }
 
-.theme-toggle:hover {
-  box-shadow: var(--shadow-lg);
+.header .theme-toggle:hover {
+  background: rgba(255, 255, 255, 0.25);
 }
 
 /* ============================================
@@ -1233,6 +1230,21 @@ body {
   padding: var(--space-8) 0;
   border-top: 1px solid var(--border-light);
   background: var(--bg-secondary);
+  text-align: center;
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+}
+
+.footer p {
+  margin-bottom: var(--space-2);
+}
+
+.footer .kbd-hints {
+  margin-top: var(--space-4);
+  display: flex;
+  justify-content: center;
+  gap: var(--space-4);
+  flex-wrap: wrap;
 }
 
 .footer a {
@@ -1547,6 +1559,11 @@ body {
 
 .toast--info {
   background: var(--info);
+  color: white;
+}
+
+.toast--warning {
+  background: var(--warning);
   color: white;
 }
 

@@ -60,11 +60,6 @@ const App = {
 
   // Bind global event handlers
   bindEvents() {
-    // Theme toggle
-    document.getElementById('theme-toggle')?.addEventListener('click', () => {
-      ThemeManager.toggle();
-    });
-
     // Modal close buttons
     document.getElementById('modal-overlay')?.addEventListener('click', (e) => {
       if (e.target.id === 'modal-overlay') {
@@ -157,7 +152,7 @@ const App = {
     if (existing) existing.remove();
 
     const toast = document.createElement('div');
-    toast.className = `toast toast-${type}`;
+    toast.className = `toast toast--${type}`;
     toast.textContent = message;
     document.body.appendChild(toast);
 
