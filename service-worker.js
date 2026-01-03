@@ -3,30 +3,30 @@
  * Enables offline functionality
  */
 
-const CACHE_NAME = 'screening-package-builder-v4';
+const CACHE_NAME = 'screening-package-builder-v5';
 const urlsToCache = [
-  '/',
-  '/index.html',
-  '/css/styles.css',
-  '/js/app.js',
-  '/js/checklist.js',
-  '/js/cover-sheet.js',
-  '/js/routing.js',
-  '/js/export.js',
-  '/js/preview-manager.js',
-  '/js/lib/storage.js',
-  '/js/lib/date-utils.js',
-  '/js/lib/theme.js',
-  '/js/packages/warrant-officer.js',
-  '/js/packages/recruiting.js',
-  '/js/packages/index.js',
-  '/lib/jspdf.umd.min.js',
-  '/data/forms.json',
-  '/data/regulations.json',
-  '/data/guidance.json',
-  '/manifest.json',
-  '/assets/icon-192.svg',
-  '/assets/icon-512.svg'
+  './',
+  './index.html',
+  './css/styles.css',
+  './js/app.js',
+  './js/checklist.js',
+  './js/cover-sheet.js',
+  './js/routing.js',
+  './js/export.js',
+  './js/preview-manager.js',
+  './js/lib/storage.js',
+  './js/lib/date-utils.js',
+  './js/lib/theme.js',
+  './js/packages/warrant-officer.js',
+  './js/packages/recruiting.js',
+  './js/packages/index.js',
+  './lib/jspdf.umd.min.js',
+  './data/forms.json',
+  './data/regulations.json',
+  './data/guidance.json',
+  './manifest.json',
+  './assets/icon-192.svg',
+  './assets/icon-512.svg'
 ];
 
 // Install event - cache all static assets
